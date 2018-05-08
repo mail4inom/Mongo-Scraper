@@ -23,7 +23,7 @@ var exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-mongoose.connect("mongodb://localhost/testdb2");
+mongoose.connect("mongodb://mail4inom:86azamat@ds215380.mlab.com:15380/inom");
 
 
 app.get("/scrape", function (req, res) {
