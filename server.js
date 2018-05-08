@@ -8,7 +8,7 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 var db = require("./models");
-var PORT = process.env.PORT || 3000;
+// var PORT = process.env.PORT || 3000;
 
 var app = express();
 
@@ -23,8 +23,14 @@ var exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-mongoose.connect("mongodb://mail4inom:86azamat@ds215380.mlab.com:15380/inom");
+// mongoose.connect("mongodb://mail4inom:86azamat@ds215380.mlab.com:15380/inom");
+// mongoose.connect("mongodb://localhost/testdb");
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
 
 app.get("/scrape", function (req, res) {
   axios.get("https://www.nytimes.com/section/politics?action=click&pgtype=Homepage&region=TopBar&module=HPMiniNav&contentCollection=Politics&WT.nav=page").then(function (response) {
@@ -68,7 +74,7 @@ app.get("/scrape", function (req, res) {
     });
 
     res.send("Scrape Complete");
-    res.redirect("/");
+    res.render("index", {articles: dbArticle});
   });
 });
 
@@ -78,7 +84,7 @@ app.get("/", function (req, res) {
   db.Article.find({})
     .then(function (dbArticle) {
       // res.json(dbArticle);
-  // console.log('DB ARTICLE: ',dbArticle)
+  console.log('DB ARTICLE: ',dbArticle)
   
       res.render('index', {articles: dbArticle});
     })
@@ -113,28 +119,37 @@ app.get("/saved", function(req, res) {
 });
 
 
-app.get("/articles/:id", function (req, res) {
-  db.Article.findOne({ _id: req.params.id })
-    .populate("note")
-    .then(function (dbArticle) {
-      res.send(dbArticle);
-    }).catch(function (err) {
-      res.json(err);
-    })
-
+// Route for grabbing a specific Article by id, populate it with it's note
+app.get("/articles/:id", function(req, res) {
+  db.Article.findOne({_id: req.params.id})
+  .populate("note")  
+  .then(function(dbArticle){
+    res.json(dbArticle);
+  }).catch(function(err){
+    res.json(err);
+  })
+  // TODO
+  // ====
+  // Finish the route so it finds one article using the req.params.id,
+  // and run the populate method with "note",
+  // then responds with the article with the note included
 });
 
 // Route for saving/updating an Article's associated Note
-app.post("/articles/:id", function (req, res) {
+app.post("/articles/:id", function(req, res) {
   db.Note.create(req.body)
-    .then(function (dbNote) {
-      return db.Article.findByIdAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true })
-    }).then(function (dbArticle) {
-      res.send(dbArticle);
-    }).catch(function (err) {
-      res.json(err);
-    })
-
+  .then(function(dbNote){
+    return db.Article.findByIdAndUpdate({_id: req.params.id}, {note: dbNote._id}, {new: true})
+  }).then(function(dbArticle){
+    res.json(dbArticle);
+  }).catch(function(err){
+    res.json(err);
+  })
+  // TODO
+  // ====
+  // save the new note that gets posted to the Notes collection
+  // then find an article from the req.params.id
+  // and update it's "note" property with the _id of the new note
 
 })
 
