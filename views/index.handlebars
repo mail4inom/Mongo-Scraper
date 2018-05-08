@@ -1,0 +1,75 @@
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<div id="contact" class="container">
+<br><br>
+  
+ <div class="row">
+        {{#each articles}}
+        <form action="/save/{{this._id}}" method="POST">
+<button type="submit" class="status" value="{{this.status}}">{{this.status}}</button>
+{{#unless this.note}}
+<button type="button" class="addnote-button" value="{{this._id}}">Add A Note</button>
+{{/unless}}
+{{#if this.note}}
+<button type="button" class="addnote-button" value="{{this._id}}">Edit Note</button>
+{{/if}}
+</form>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <p>
+                                <b>Title: {{this.title}}</b>
+                            </p>
+                            <br>
+                            <p>{{this.description}}</p>
+                            
+                                <a href='{{this.link}}'>More Info</a>
+                            <h4>{{this.byline}}.   <b>Date:</b> {{this.time}}</h4> 
+                        <div id="notes"></div>
+                        </div>
+                        <div class="col-sm-4" class="panel-body">
+                                <img  style=" width: 50%; height: 136px" src='{{this.img}}'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          {{/each}}  
+  </div>
+  <br><br>
+   
+</div>
+
+{{!-- {{#each articles}}
+<div class="story-body" id={{this._id}}>
+<h2>
+<a href="{{this.link}}" target="_blank">{{this.title}}</a>
+<form action="/save/{{this._id}}" method="POST">
+<button type="submit" class="status" value="{{this.status}}">{{this.status}}</button>
+{{#unless this.note}}
+<button type="button" class="addnote-button" value="{{this._id}}">Add A Note</button>
+{{/unless}}
+{{#if this.note}}
+<button type="button" class="addnote-button" value="{{this._id}}">Edit Note</button>
+{{/if}}
+</form>
+</h2>
+<summary>{{this.summary}}</summary>
+<img class="media" src="{{this.img}}">
+</div>
+{{/each}} --}}

@@ -1,0 +1,45 @@
+<div id="contact" class="container">
+    <div class="text-center">
+        <h4 style="color: red;">{{message}}</h4>
+    </div>
+    
+    <div class="row">
+        {{#each saved}}
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="story-body" id={{this._id}}>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h2>
+                                    <form action="/save/{{this._id}}" method="POST">
+                                        <button type="submit"  value="{{this.status}}">Delete</button>
+                                        <button type="button"  value="{{this._id}}">Edit Note</button>
+                                    </form>
+                                </h2>
+                                <p>
+                                    <b>Title: {{this.title}}</b>
+                                </p>
+                                <br>
+                                <p>{{this.description}}</p>
+
+                                <a href='{{this.link}}'>More Info</a>
+                                <h4>{{this.byline}}.
+                                    <b>Date:</b> {{this.time}}</h4>
+                            </div>
+                            <div class="col-sm-4" class="panel-body">
+                                <img style=" width: 50%; height: 136px" src='{{this.img}}' />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{/each}}
+    </div>
+    <br>
+    <br>
+
+</div>
