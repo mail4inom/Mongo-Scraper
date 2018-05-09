@@ -25,7 +25,7 @@ app.set("view engine", "handlebars");
 
 // mongoose.connect("mongodb://mail4inom:86azamat@ds215380.mlab.com:15380/inom");
 // mongoose.connect("mongodb://localhost/testdb");
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
