@@ -1,45 +1,46 @@
-
-
 <div id="contact" class="container">
-<br><br>
-  
- <div class="row">
+    <br>
+    <br>
+
+    <div class="row">
         {{#each articles}}
-        <form action="/save/{{this._id}}" method="POST">
-<button type="submit" class="status" value="{{this.status}}">{{this.status}}</button>
-{{#unless this.note}}
-<button type="button" class="addnote-button" value="{{this._id}}">Add A Note</button>
-{{/unless}}
-{{#if this.note}}
-<button type="button" class="addnote-button" value="{{this._id}}">Edit Note</button>
-{{/if}}
-</form>
         <div class="col-md-12">
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <p>
-                                <b>Title: {{this.title}}</b>
-                            </p>
-                            <br>
-                            <p>{{this.description}}</p>
-                            
-                                <a href='{{this.link}}'>More Info</a>
-                            <h4>{{this.byline}}.   <b>Date:</b> {{this.time}}</h4> 
-                        <div id="notes"></div>
-                        </div>
-                        <div class="col-sm-4" class="panel-body">
-                                <img  style=" width: 50%; height: 136px" src='{{this.img}}'/>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>{{this.title}}</b></h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                  
+                                    <br>
+                                    <p>{{this.description}}</p>
+
+                                    <a href='{{this.link}}'>More Info</a>
+                                    <h5>{{this.byline}}.
+                                        <b>Date:</b> {{this.time}}</h5>
+                                    <div id="notes"></div>
+                                    <form action="/save/{{this._id}}" method="POST">
+                                        <button type="submit" class="status" value="{{this.status}}">{{this.status}}</button>
+                                        {{#unless this.note}}
+                                        <button type="button" class="addnote-button" value="{{this._id}}">Add A Note</button>
+                                        {{/unless}} {{#if this.note}}
+                                        <button type="button" class="addnote-button" value="{{this._id}}">Edit Note</button>
+                                        {{/if}}
+                                    </form>
+                                </div>
+                                <div class="col-sm-4" class="panel-body">
+                                    <img style=" width: 50%; height: 136px" src='{{this.img}}' />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-          {{/each}}  
-  </div>
-  <br><br>
-   
+        {{/each}}
+    </div>
 </div>
-

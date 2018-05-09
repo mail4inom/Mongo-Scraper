@@ -8,7 +8,7 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 var db = require("./models");
-// var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 3000;
 
 var app = express();
 
@@ -23,14 +23,14 @@ var exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// mongoose.connect("mongodb://mail4inom:86azamat@ds215380.mlab.com:15380/inom");
-// mongoose.connect("mongodb://localhost/testdb");
-var MONGODB_URI = process.env.MONGODB_URI
 
-// Set mongoose to leverage built in JavaScript ES6 Promises
-// Connect to the Mongo DB
-mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
+mongoose.connect("mongodb://localhost/testdb");
+
+
+// var MONGODB_URI = process.env.MONGODB_URI
+
+// mongoose.Promise = Promise;
+// mongoose.connect(MONGODB_URI);
 
 app.get("/scrape", function (req, res) {
   axios.get("https://www.nytimes.com/section/politics?action=click&pgtype=Homepage&region=TopBar&module=HPMiniNav&contentCollection=Politics&WT.nav=page").then(function (response) {
